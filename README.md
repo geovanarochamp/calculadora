@@ -6,7 +6,7 @@ Projeto desenvolvido para estudo e aplicação de JavaScript.
 
 ## Tarefas
 
-- [ ] Criar estrtutura HTML
+- [X] Criar estrtutura HTML
 - [ ] Personalizar o layout com CSS
 - [ ] Pensar na lógica a ser utilizada no JavaScript
 - [ ] Criar os eventos nos botões
