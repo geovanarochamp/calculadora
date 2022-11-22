@@ -6,6 +6,32 @@ const resetBtn = document.querySelector('#btnAC')
 let result = 0
 let lastOperatorButtonPress = ""
 
+
+function sum(number) {
+    result += number
+    lastOperatorButtonPress = "+"
+    return result
+}
+
+function subtraction(number) {
+    result = (result == 0) ? number: result - number
+    lastOperatorButtonPress = "-"
+    return result
+}
+
+function multiplication(number) {
+    result = (result == 0) ? number: result * number
+    lastOperatorButtonPress = "*"
+    return result
+}
+
+function division(number) {
+    result = (result == 0) ? number: result / number
+    lastOperatorButtonPress = "/"
+    return result
+}
+
+
 resetBtn.addEventListener('click', () => {
     result = 0
     display.textContent = ""
@@ -36,55 +62,139 @@ operatorsBtns.forEach(function(opBtn) {
         switch (operation) {
             case '+':
                 number = Number(display.textContent)
-                result += number                
-                lastOperatorButtonPress = "+"
+
+                switch(lastOperatorButtonPress) {
+                    case '+':
+                        result = sum(number)                     
+                    break
+                    
+                    case '-':
+                        result = subtraction(number)
+                    break
+
+                    case '*':
+                        result = multiplication(number)
+                    break
+
+                    case '/':
+                        result = division(number)
+                    break
+
+                    case '':
+                        result = sum(number)
+                    break
+                 }       
+
+                lastOperatorButtonPress = "+" 
                 display.textContent = ""
             break
             
             case '-':
                 number = Number(display.textContent)
-                result = (result == 0) ? number : result - number
-                // result -= number
-                console.log(result)
+
+                switch(lastOperatorButtonPress) {
+                    case '+':
+                        result = sum(number)                     
+                    break
+                    
+                    case '-':
+                        result = subtraction(number)
+                    break
+
+                    case '*':
+                        result = multiplication(number)
+                    break
+
+                    case '/':
+                        result = division(number)
+                    break
+
+                    case '':
+                        result = subtraction(number)
+                    break
+                 } 
+                
                 lastOperatorButtonPress = "-"
                 display.textContent = ""
             break
 
             case '*':
                 number = Number(display.textContent)
-                result = (result == 0) ? number : result * number
+
+                switch(lastOperatorButtonPress) {
+                    case '+':
+                        result = sum(number)                     
+                    break
+                    
+                    case '-':
+                        result = subtraction(number)
+                    break
+
+                    case '*':
+                        result = multiplication(number)
+                    break
+
+                    case '/':
+                        result = division(number)
+                    break
+
+                    case '':
+                        result = multiplication(number)
+                    break
+                 }                   
+            
                 lastOperatorButtonPress = "*"
                 display.textContent = ""
             break
 
             case '/':
                 number = Number(display.textContent)
-                result = (result == 0) ? number : result / number
+
+                switch(lastOperatorButtonPress) {
+                    case '+':
+                        result = sum(number)                     
+                    break
+                    
+                    case '-':
+                        result = subtraction(number)
+                    break
+
+                    case '*':
+                        result = multiplication(number)
+                    break
+
+                    case '/':
+                        result = division(number)
+                    break
+
+                    case '':
+                        result = division(number)
+                    break
+                 } 
+
                 lastOperatorButtonPress = "/"
                 display.textContent = ""
             break
 
             case '=':
+                number = Number(display.textContent)
+                
                 console.log(lastOperatorButtonPress)
                 switch(lastOperatorButtonPress) {
-                    case '+':
-                        number = Number(display.textContent)
-                        result += number                    
+                    case '+':                        
+                        result = sum(number)                     
                     break
                     
                     case '-':
-                        number = Number(display.textContent)
-                        result -= number
+                        result = subtraction(number)
                     break
 
                     case '*':
-                        number = Number(display.textContent)
-                        result = result * number
+                        result = multiplication(number)
                     break
 
                     case '/':
-                        number = Number(display.textContent)
-                        result = result / number
+                        result = division(number)
                     break
                  }     
 
