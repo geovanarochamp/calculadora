@@ -31,13 +31,92 @@ function division(number) {
     return result
 }
 
+function percent(number) {
+    
+    console.log(result)
+    console.log(number)
+    
+    let percentNumber = (result * (number / 100))
+    console.log(percentNumber)
+    switch(lastOperatorButtonPress) {
+    case '+':
+        result = result + percentNumber                     
+    break
+    
+    case '-':
+        result = result - percentNumber 
+    break
+
+    case '*':
+        result = result * percentNumber 
+    break
+
+    case '/':
+        result = result / percentNumber 
+    break
+    }
+    
+    lastOperatorButtonPress = "/"
+    return result
+}
+
+function runLastOperation(lastOperatorButtonPress, result, number) {
+    
+    switch(lastOperatorButtonPress) {
+        case '+':
+            result = sum(number)                     
+        break
+        
+        case '-':
+            result = subtraction(number)
+        break
+
+        case '*':
+            result = multiplication(number)
+        break
+
+        case '/':
+            result = division(number)
+        break
+
+        case '%':
+            result = percent(number)
+        break
+
+        case '':
+            result = number
+        break
+     }
+
+    //  console.log(result)
+     return result
+}
+
+function displayResult() {
+    if ((String(result).length) > 7) {
+                    
+        let fitDisplay = result.toString().substring(0,9)                   
+
+        const decimalIndex = fitDisplay.indexOf('.')
+        console.log(decimalIndex)
+        if ((decimalIndex + 1) == 9) {
+            fitDisplay = Math.round(fitDisplay)
+        }
+
+        display.textContent = fitDisplay
+                     
+    } else {
+        display.textContent = result
+    }
+
+}
+
 
 resetBtn.addEventListener('click', () => {
     result = 0
     display.textContent = ""
     lastOperatorButtonPress = ""
 })
-
 
 
 digNumbers.forEach(function(digNumber) {
@@ -49,7 +128,7 @@ digNumbers.forEach(function(digNumber) {
     
         if ((isZero) || (isEmpty)) {
             display.textContent = digNumber.textContent
-        } else {           
+        } else if (display.textContent.length < 8) {           
             display.textContent = display.textContent + digNumber.textContent
         }
     }
@@ -63,144 +142,56 @@ operatorsBtns.forEach(function(opBtn) {
             case '+':
                 number = Number(display.textContent)
 
-                switch(lastOperatorButtonPress) {
-                    case '+':
-                        result = sum(number)                     
-                    break
-                    
-                    case '-':
-                        result = subtraction(number)
-                    break
-
-                    case '*':
-                        result = multiplication(number)
-                    break
-
-                    case '/':
-                        result = division(number)
-                    break
-
-                    case '':
-                        result = sum(number)
-                    break
-                 }       
-
+                result = runLastOperation(lastOperatorButtonPress, result, number)               
                 lastOperatorButtonPress = "+" 
+
                 display.textContent = ""
             break
             
             case '-':
                 number = Number(display.textContent)
 
-                switch(lastOperatorButtonPress) {
-                    case '+':
-                        result = sum(number)                     
-                    break
-                    
-                    case '-':
-                        result = subtraction(number)
-                    break
-
-                    case '*':
-                        result = multiplication(number)
-                    break
-
-                    case '/':
-                        result = division(number)
-                    break
-
-                    case '':
-                        result = subtraction(number)
-                    break
-                 } 
-                
+                result = runLastOperation(lastOperatorButtonPress, result, number)                
                 lastOperatorButtonPress = "-"
+                
                 display.textContent = ""
             break
 
             case '*':
                 number = Number(display.textContent)
 
-                switch(lastOperatorButtonPress) {
-                    case '+':
-                        result = sum(number)                     
-                    break
-                    
-                    case '-':
-                        result = subtraction(number)
-                    break
-
-                    case '*':
-                        result = multiplication(number)
-                    break
-
-                    case '/':
-                        result = division(number)
-                    break
-
-                    case '':
-                        result = multiplication(number)
-                    break
-                 }                   
-            
+                result = runLastOperation(lastOperatorButtonPress, result, number)                   
                 lastOperatorButtonPress = "*"
+            
                 display.textContent = ""
             break
 
             case '/':
                 number = Number(display.textContent)
 
-                switch(lastOperatorButtonPress) {
-                    case '+':
-                        result = sum(number)                     
-                    break
-                    
-                    case '-':
-                        result = subtraction(number)
-                    break
-
-                    case '*':
-                        result = multiplication(number)
-                    break
-
-                    case '/':
-                        result = division(number)
-                    break
-
-                    case '':
-                        result = division(number)
-                    break
-                 } 
-
+                result = runLastOperation(lastOperatorButtonPress, result, number)                
                 lastOperatorButtonPress = "/"
+
+                display.textContent = ""
+            break
+            
+            case '%':
+                number = Number(display.textContent)
+
+                result = runLastOperation(lastOperatorButtonPress, result, number)                
+                lastOperatorButtonPress = "%"
+
                 display.textContent = ""
             break
 
             case '=':
                 number = Number(display.textContent)
+
+                result = runLastOperation(lastOperatorButtonPress, result, number)                
+
+                displayResult()
                 
-                console.log(lastOperatorButtonPress)
-                switch(lastOperatorButtonPress) {
-                    case '+':                        
-                        result = sum(number)                     
-                    break
-                    
-                    case '-':
-                        result = subtraction(number)
-                    break
-
-                    case '*':
-                        result = multiplication(number)
-                    break
-
-                    case '/':
-                        result = division(number)
-                    break
-                 }     
-
-                display.textContent = result
-                result = 0
-            break
+            break        
         }
     }
 

@@ -82,16 +82,17 @@ button:active {
     filter: brightness(0.95);
 }
 
-.whiteBtn {
-    background-color: #A9A9A9;
-}
-
 .opBtn {
     background-color: #FF9900;
 }
 
 .grayBtn {
     background-color: #343434;
+}
+
+.whiteBtn, #btnRadical
+#btnPercent {
+    background-color: #A9A9A9;
 }
 
 #btn0 {
