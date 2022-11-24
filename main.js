@@ -161,13 +161,13 @@ function displayResult() {
 }
 
 
-resetBtn.addEventListener('click', () => {
+resetBtn.addEventListener('click', resetCalc)
+function resetCalc() {
     result = 0
     display.textContent = ""
     displaySignals.textContent = ""
     lastOperatorButtonPress = ""
-})
-
+}
 
 digNumbers.forEach(function(digNumber) {
     digNumber.addEventListener('click', updateDisplay)
@@ -261,6 +261,115 @@ operatorsBtns.forEach(function(opBtn) {
         }
     }
 
-    opBtn.addEventListener('click', operations)
-    
+    opBtn.addEventListener('click', operations)    
 })
+
+
+/* keyboard inputs */
+
+window.addEventListener('keydown', handleKeyDown)
+
+function handleKeyDown(event) {
+    console.log(event.key)
+    updateDisplayKeyBoard(event.key)
+
+    if ((event.key == "+") || (event.key == "-") || (event.key == "*") || (event.key == "/") || (event.key == "Enter") || (event.key == "%")) {
+        operationsKeyBoard(event.key)
+    }
+
+    if (event.key == "Delete") {
+        resetCalc()
+    }
+}
+
+function updateDisplayKeyBoard(digNumber) {
+    const isZero = (display.textContent == 0)
+    const isEmpty = (display.textContent == "")
+
+    const isNotANumber = isNaN(digNumber)
+    
+    if ((isNotANumber == false) || (digNumber == '.')) {
+        if ((isZero) || (isEmpty)) {
+            display.textContent = digNumber
+        } else if (display.textContent.length < 8) {           
+            display.textContent = display.textContent + digNumber
+        }
+    }
+}
+
+function operationsKeyBoard(signalOfOperation) {
+    const operation = signalOfOperation               
+    switch (operation) {
+        case '+':
+            number = Number(display.textContent)
+            displaySignals.textContent = ""
+
+            result = runLastOperation(lastOperatorButtonPress, result, number)               
+            lastOperatorButtonPress = "+" 
+
+            display.textContent = ""
+        break
+        
+        case '-':
+            number = Number(display.textContent)
+            displaySignals.textContent = ""
+
+            result = runLastOperation(lastOperatorButtonPress, result, number)                
+            lastOperatorButtonPress = "-"
+            
+            display.textContent = ""
+        break
+
+        case '*':
+            number = Number(display.textContent)
+            displaySignals.textContent = ""
+
+            result = runLastOperation(lastOperatorButtonPress, result, number)                   
+            lastOperatorButtonPress = "*"
+        
+            display.textContent = ""
+        break
+
+        case '/':
+            number = Number(display.textContent)
+            displaySignals.textContent = ""
+
+            result = runLastOperation(lastOperatorButtonPress, result, number)                
+            lastOperatorButtonPress = "/"
+
+            display.textContent = ""
+        break
+        
+        case '%':
+            number = Number(display.textContent)
+            isPercent = true
+            displaySignals.textContent = "%"
+
+            result = runLastOperation(lastOperatorButtonPress, result, number)                                
+
+            display.textContent = ""
+        break
+
+        case 'sqrt':
+            number = Number(display.textContent)
+            isRadical = true 
+            displaySignals.textContent = "sqrt"
+
+            result = runLastOperation(lastOperatorButtonPress, result, number)                                
+            lastOperatorButtonPress = "sqrt"
+
+            display.textContent = ""
+        break
+
+        case 'Enter':
+            number = Number(display.textContent)
+
+            result = runLastOperation(lastOperatorButtonPress, result, number)   
+            lastOperatorButtonPress = ""             
+
+            displayResult()
+            
+        break        
+    }
+}
+
