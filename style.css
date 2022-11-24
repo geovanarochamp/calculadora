@@ -61,13 +61,13 @@ body {
 }
 
 button {
-    width: clamp(6rem, 6rem + 30vw, 10rem);
-    height: clamp(6rem, 6rem + 30vw, 10rem);
+    width: clamp(4rem, 4rem + 10vw, 8rem);
+    height: clamp(4rem, 4rem + 10vw, 8rem);
     border-radius: 9999px;
     outline: none;
     border: none;
 
-    font-size: clamp(2.5rem, 2.5rem + 30vw, 4rem);
+    font-size: clamp(2.4rem, 2.4rem + 30vw, 3.2rem);
     color: var(--txt-color-light);
 
     display: flex;
