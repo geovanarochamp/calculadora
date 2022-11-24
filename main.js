@@ -1,43 +1,45 @@
 const display = document.querySelector('.display h3')
+const displaySignals = document.querySelector('.display h4')
 const digNumbers = document.querySelectorAll('.grayBtn')
 const operatorsBtns = document.querySelectorAll('.opBtn')
 const resetBtn = document.querySelector('#btnAC')
 
 let result = 0
 let lastOperatorButtonPress = ""
+let isPercent = false
+let isRadical = false
 
 
 function sum(number) {
-    result += number
-    lastOperatorButtonPress = "+"
+    result += number            
     return result
 }
 
 function subtraction(number) {
     result = (result == 0) ? number: result - number
-    lastOperatorButtonPress = "-"
     return result
 }
 
 function multiplication(number) {
     result = (result == 0) ? number: result * number
-    lastOperatorButtonPress = "*"
     return result
 }
 
 function division(number) {
     result = (result == 0) ? number: result / number
-    lastOperatorButtonPress = "/"
     return result
 }
 
 function percent(number) {
-    
-    console.log(result)
-    console.log(number)
-    
-    let percentNumber = (result * (number / 100))
-    console.log(percentNumber)
+
+    let percentNumber
+    if (lastOperatorButtonPress == "") {
+        result = number/100
+        console.log(result)
+    } else {    
+        percentNumber = (result * (number / 100))
+    }
+
     switch(lastOperatorButtonPress) {
     case '+':
         result = result + percentNumber                     
@@ -45,6 +47,7 @@ function percent(number) {
     
     case '-':
         result = result - percentNumber 
+        console.log(result)
     break
 
     case '*':
@@ -54,42 +57,88 @@ function percent(number) {
     case '/':
         result = result / percentNumber 
     break
+
     }
-    
-    lastOperatorButtonPress = "/"
+
+    lastOperatorButtonPress = "%"
+    isPercent = false
+    return result
+}
+
+function radical(number) {
+
+    let radicalNumber
+    radicalNumber = Math.sqrt(number)
+
+    switch(lastOperatorButtonPress) {
+        case '+':
+            result = result + radicalNumber                     
+        break
+        
+        case '-':
+            result = result - radicalNumber 
+            console.log(result)
+        break
+
+        case '*':
+            result = result * radicalNumber 
+        break
+
+        case '/':
+            result = result / radicalNumber 
+        break
+
+        case '':
+            result = radicalNumber
+        break
+    }
+
+    lastOperatorButtonPress = "sqrt"
+    isRadical = false
+    console.log(result)
     return result
 }
 
 function runLastOperation(lastOperatorButtonPress, result, number) {
     
-    switch(lastOperatorButtonPress) {
-        case '+':
-            result = sum(number)                     
-        break
-        
-        case '-':
-            result = subtraction(number)
-        break
+    if (isPercent) {
+        result = percent(number)    
+    } else if (isRadical) {
+        result = radical(number)
+    } else {
 
-        case '*':
-            result = multiplication(number)
-        break
+        switch(lastOperatorButtonPress) {
+            case '+':
+                result = sum(number)                     
+            break
+            
+            case '-':
+                result = subtraction(number)
+            break
 
-        case '/':
-            result = division(number)
-        break
+            case '*':
+                result = multiplication(number)
+            break
 
-        case '%':
-            result = percent(number)
-        break
+            case '/':
+                result = division(number)
+            break
 
-        case '':
-            result = number
-        break
-     }
+            case '%':
+                result = result
+            break
 
-    //  console.log(result)
-     return result
+            case 'sqrt':
+                result = result
+            break
+
+            case '':
+                result = number
+            break
+        }
+    }
+
+    return result
 }
 
 function displayResult() {
@@ -115,6 +164,7 @@ function displayResult() {
 resetBtn.addEventListener('click', () => {
     result = 0
     display.textContent = ""
+    displaySignals.textContent = ""
     lastOperatorButtonPress = ""
 })
 
@@ -137,10 +187,10 @@ digNumbers.forEach(function(digNumber) {
 operatorsBtns.forEach(function(opBtn) {    
     const operations = () => {
         const operation = opBtn.value                
-        
         switch (operation) {
             case '+':
                 number = Number(display.textContent)
+                displaySignals.textContent = ""
 
                 result = runLastOperation(lastOperatorButtonPress, result, number)               
                 lastOperatorButtonPress = "+" 
@@ -150,6 +200,7 @@ operatorsBtns.forEach(function(opBtn) {
             
             case '-':
                 number = Number(display.textContent)
+                displaySignals.textContent = ""
 
                 result = runLastOperation(lastOperatorButtonPress, result, number)                
                 lastOperatorButtonPress = "-"
@@ -159,6 +210,7 @@ operatorsBtns.forEach(function(opBtn) {
 
             case '*':
                 number = Number(display.textContent)
+                displaySignals.textContent = ""
 
                 result = runLastOperation(lastOperatorButtonPress, result, number)                   
                 lastOperatorButtonPress = "*"
@@ -168,6 +220,7 @@ operatorsBtns.forEach(function(opBtn) {
 
             case '/':
                 number = Number(display.textContent)
+                displaySignals.textContent = ""
 
                 result = runLastOperation(lastOperatorButtonPress, result, number)                
                 lastOperatorButtonPress = "/"
@@ -177,9 +230,21 @@ operatorsBtns.forEach(function(opBtn) {
             
             case '%':
                 number = Number(display.textContent)
+                isPercent = true
+                displaySignals.textContent = "%"
 
-                result = runLastOperation(lastOperatorButtonPress, result, number)                
-                lastOperatorButtonPress = "%"
+                result = runLastOperation(lastOperatorButtonPress, result, number)                                
+
+                display.textContent = ""
+            break
+
+            case 'sqrt':
+                number = Number(display.textContent)
+                isRadical = true 
+                displaySignals.textContent = "sqrt"
+
+                result = runLastOperation(lastOperatorButtonPress, result, number)                                
+                lastOperatorButtonPress = "sqrt"
 
                 display.textContent = ""
             break
@@ -187,7 +252,8 @@ operatorsBtns.forEach(function(opBtn) {
             case '=':
                 number = Number(display.textContent)
 
-                result = runLastOperation(lastOperatorButtonPress, result, number)                
+                result = runLastOperation(lastOperatorButtonPress, result, number)   
+                lastOperatorButtonPress = ""             
 
                 displayResult()
                 

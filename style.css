@@ -27,7 +27,7 @@ body {
     width: 25vw;   
     height: 80vh;
 
-    background-color: rgb(28, 28, 28);
+    background-color: rgb(12, 12, 12);
     align-self: center;   
     justify-self: center;
     border-radius: 8px;
@@ -37,14 +37,18 @@ body {
 .display {
     height: 15vh;
     display: flex;
-    align-items: flex-end;
-    justify-content: end;
-    margin-right: 1em;
-    margin-bottom: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 1rem 0 1rem;
 }
 
 .display h3 {
     font-size:5em;
+    font-weight: 300;
+}
+
+.display h4 {
+    font-size:2em;
     font-weight: 300;
 }
 
