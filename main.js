@@ -35,29 +35,26 @@ function percent(number) {
     let percentNumber
     if (lastOperatorButtonPress == "") {
         result = number/100
-        console.log(result)
     } else {    
         percentNumber = (result * (number / 100))
     }
 
     switch(lastOperatorButtonPress) {
-    case '+':
-        result = result + percentNumber                     
-    break
-    
-    case '-':
-        result = result - percentNumber 
-        console.log(result)
-    break
+        case '+':
+            result = result + percentNumber                     
+        break
+        
+        case '-':
+            result = result - percentNumber 
+        break
 
-    case '*':
-        result = result * percentNumber 
-    break
+        case '*':
+            result = result * percentNumber 
+        break
 
-    case '/':
-        result = result / percentNumber 
-    break
-
+        case '/':
+            result = result / percentNumber 
+        break
     }
 
     lastOperatorButtonPress = "%"
@@ -95,7 +92,6 @@ function radical(number) {
 
     lastOperatorButtonPress = "sqrt"
     isRadical = false
-    console.log(result)
     return result
 }
 
@@ -142,8 +138,9 @@ function runLastOperation(lastOperatorButtonPress, result, number) {
 }
 
 function displayResult() {
-    if ((String(result).length) > 7) {
-                    
+    
+    console.log(result)                    
+    if ((String(result).length) > 8) {
         let fitDisplay = result.toString().substring(0,9)                   
 
         const decimalIndex = fitDisplay.indexOf('.')
@@ -151,13 +148,12 @@ function displayResult() {
         if ((decimalIndex + 1) == 9) {
             fitDisplay = Math.round(fitDisplay)
         }
-
         display.textContent = fitDisplay
                      
     } else {
+        console.log("to de k agora")
         display.textContent = result
     }
-
 }
 
 
@@ -255,8 +251,7 @@ operatorsBtns.forEach(function(opBtn) {
                 result = runLastOperation(lastOperatorButtonPress, result, number)   
                 lastOperatorButtonPress = ""             
 
-                displayResult()
-                
+                displayResult()                
             break        
         }
     }
@@ -270,14 +265,13 @@ operatorsBtns.forEach(function(opBtn) {
 window.addEventListener('keydown', handleKeyDown)
 
 function handleKeyDown(event) {
-    console.log(event.key)
     updateDisplayKeyBoard(event.key)
 
     if ((event.key == "+") || (event.key == "-") || (event.key == "*") || (event.key == "/") || (event.key == "Enter") || (event.key == "%")) {
         operationsKeyBoard(event.key)
     }
 
-    if (event.key == "Delete") {
+    if ((event.key == "Delete") || (event.key == "Backspace")) {
         resetCalc()
     }
 }
@@ -367,9 +361,19 @@ function operationsKeyBoard(signalOfOperation) {
             result = runLastOperation(lastOperatorButtonPress, result, number)   
             lastOperatorButtonPress = ""             
 
-            displayResult()
-            
+            displayResult()                 
         break        
     }
 }
 
+
+const equalBtn = document.querySelector('#btnEqual')
+const radicalBtn = document.querySelector('#btnRadical')
+const percentBtn = document.querySelector('#btnPercent')
+
+radicalBtn.addEventListener('click', equalFocus)
+percentBtn.addEventListener('click', equalFocus)
+
+function equalFocus() {
+    equalBtn.focus()
+}
