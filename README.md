@@ -2,17 +2,19 @@
 
 Projeto desenvolvido para estudo e aplicação de JavaScript.
 
+![preview](.github/preview.png)
+
 🔗 [Clique aqui para acessar](https://geovanarochamp.github.io/calculadora/)
 
 ## Tarefas
 
 - [X] Criar estrtutura HTML
-- [ ] Personalizar o layout com CSS
-- [ ] Pensar na lógica a ser utilizada no JavaScript
-- [ ] Criar os eventos nos botões
-- [ ] Realizar a operação
-- [ ] Exibir Resultado
-- [ ] Digitar com o teclado também
+- [X] Personalizar o layout com CSS
+- [X]  Pensar na lógica a ser utilizada no JavaScript
+- [X] Criar os eventos nos botões
+- [X] Realizar a operação
+- [X] Exibir Resultado
+- [X] Digitar com o teclado também
 
 
 ## 🛠️ Tecnologias
